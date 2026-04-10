@@ -135,7 +135,18 @@ dependencies {
     androidTestImplementation(libs.hilt.android.testing)
     androidTestImplementation(libs.kotlin.test)
 
+    androidTestImplementation("com.kaspersky.android-components:kaspresso:1.6.0") {
+        exclude(module = "protobuf-lite")
+    }
+    androidTestImplementation("com.kaspersky.android-components:kaspresso-compose-support:1.6.0") {
+        exclude(module = "protobuf-lite")
+    }
+    implementation("androidx.drawerlayout:drawerlayout:1.2.0")
+
     baselineProfile(projects.benchmarks)
+
+    androidTestImplementation("io.github.kakaocup:compose:1.1.0")
+
 }
 
 baselineProfile {

@@ -275,14 +275,14 @@ private fun LazyStaggeredGridScope.onboarding(
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 24.dp),
+                            .padding(top = 24.dp).testTag("listHeader"),
                         style = MaterialTheme.typography.titleMedium,
                     )
                     Text(
                         text = stringResource(R.string.feature_foryou_api_onboarding_guidance_subtitle),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 8.dp, start = 24.dp, end = 24.dp),
+                            .padding(top = 8.dp, start = 24.dp, end = 24.dp).testTag("listSubheader"),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.bodyMedium,
                     )
@@ -294,7 +294,7 @@ private fun LazyStaggeredGridScope.onboarding(
                     // Done button
                     Row(
                         horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().testTag("rowForDoneButton"),
                     ) {
                         NiaButton(
                             onClick = saveFollowedTopics,
@@ -302,10 +302,11 @@ private fun LazyStaggeredGridScope.onboarding(
                             modifier = Modifier
                                 .padding(horizontal = 24.dp)
                                 .widthIn(364.dp)
-                                .fillMaxWidth(),
+                                .fillMaxWidth().testTag("niaButtonDone"),
                         ) {
                             Text(
                                 text = stringResource(R.string.feature_foryou_api_done),
+                                modifier = Modifier.testTag("niaButtonDoneText"),
                             )
                         }
                     }

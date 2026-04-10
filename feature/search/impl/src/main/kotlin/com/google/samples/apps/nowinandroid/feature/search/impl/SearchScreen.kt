@@ -456,7 +456,10 @@ private fun SearchToolbar(
                 imageVector = NiaIcons.ArrowBack,
                 contentDescription = stringResource(
                     id = string.core_ui_back,
+
                 ),
+                modifier = Modifier.testTag("backButtonIconOnSearchToolbar"),
+
             )
         }
         SearchTextField(
@@ -494,6 +497,7 @@ private fun SearchTextField(
                     id = searchR.string.feature_search_api_title,
                 ),
                 tint = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.testTag("textFieldSearchIcon"),
             )
         },
         trailingIcon = {
@@ -509,6 +513,7 @@ private fun SearchTextField(
                             id = searchR.string.feature_search_api_clear_search_text_content_desc,
                         ),
                         tint = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.testTag("searchFieldCloseIcon"),
                     )
                 }
             }
