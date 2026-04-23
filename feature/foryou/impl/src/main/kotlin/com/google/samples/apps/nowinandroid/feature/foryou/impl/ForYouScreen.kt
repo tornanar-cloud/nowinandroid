@@ -50,6 +50,7 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridScope
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
@@ -91,6 +92,9 @@ import com.google.samples.apps.nowinandroid.core.designsystem.component.NiaIconT
 import com.google.samples.apps.nowinandroid.core.designsystem.component.NiaOverlayLoadingWheel
 import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar.DecorativeScrollbar
 import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar.DraggableScrollbar
+import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar.Tags
+import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar.lazyListItemPosition
+import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar.lazyListSize
 import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar.rememberDraggableScroller
 import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar.scrollbarState
 import com.google.samples.apps.nowinandroid.core.designsystem.icon.NiaIcons
@@ -265,7 +269,7 @@ private fun LazyStaggeredGridScope.onboarding(
         OnboardingUiState.Loading,
         OnboardingUiState.LoadFailed,
         OnboardingUiState.NotShown,
-        -> Unit
+            -> Unit
 
         is OnboardingUiState.Shown -> {
             item(span = StaggeredGridItemSpan.FullLine, contentType = "onboarding") {
@@ -275,14 +279,16 @@ private fun LazyStaggeredGridScope.onboarding(
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 24.dp).testTag("listHeader"),
+                            .padding(top = 24.dp)
+                            .testTag("listHeader"),
                         style = MaterialTheme.typography.titleMedium,
                     )
                     Text(
                         text = stringResource(R.string.feature_foryou_api_onboarding_guidance_subtitle),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 8.dp, start = 24.dp, end = 24.dp).testTag("listSubheader"),
+                            .padding(top = 8.dp, start = 24.dp, end = 24.dp)
+                            .testTag("listSubheader"),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.bodyMedium,
                     )
@@ -294,7 +300,9 @@ private fun LazyStaggeredGridScope.onboarding(
                     // Done button
                     Row(
                         horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier.fillMaxWidth().testTag("rowForDoneButton"),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .testTag("rowForDoneButton"),
                     ) {
                         NiaButton(
                             onClick = saveFollowedTopics,
@@ -302,7 +310,8 @@ private fun LazyStaggeredGridScope.onboarding(
                             modifier = Modifier
                                 .padding(horizontal = 24.dp)
                                 .widthIn(364.dp)
-                                .fillMaxWidth().testTag("niaButtonDone"),
+                                .fillMaxWidth()
+                                .testTag("niaButtonDone"),
                         ) {
                             Text(
                                 text = stringResource(R.string.feature_foryou_api_done),
@@ -349,18 +358,20 @@ private fun TopicSelection(
                 // The maximum of these two bounds is therefore a valid upper bound in all cases.
                 .heightIn(max = max(240.dp, with(LocalDensity.current) { 240.sp.toDp() }))
                 .fillMaxWidth()
-                .testTag(topicSelectionTestTag),
+                .testTag(topicSelectionTestTag)
+                .lazyListSize(onboardingUiState.topics.size),
         ) {
-            items(
+            itemsIndexed(
                 items = onboardingUiState.topics,
-                key = { it.topic.id },
-            ) {
+                key = { index, item -> item.topic.id },
+            ) { index, item ->
                 SingleTopicButton(
-                    name = it.topic.name,
-                    topicId = it.topic.id,
-                    imageUrl = it.topic.imageUrl,
-                    isSelected = it.isFollowed,
+                    name = item.topic.name,
+                    topicId = item.topic.id,
+                    imageUrl = item.topic.imageUrl,
+                    isSelected = item.isFollowed,
                     onClick = onTopicCheckedChanged,
+                    modifier = modifier.lazyListItemPosition(index),
                 )
             }
         }
@@ -381,10 +392,11 @@ private fun SingleTopicButton(
     topicId: String,
     imageUrl: String,
     isSelected: Boolean,
+    modifier: Modifier = Modifier,
     onClick: (String, Boolean) -> Unit,
 ) {
     Surface(
-        modifier = Modifier
+        modifier = modifier
             .width(312.dp)
             .heightIn(min = 56.dp),
         shape = RoundedCornerShape(corner = CornerSize(8.dp)),
@@ -400,13 +412,15 @@ private fun SingleTopicButton(
         ) {
             TopicIcon(
                 imageUrl = imageUrl,
+
             )
             Text(
                 text = name,
                 style = MaterialTheme.typography.titleSmall,
                 modifier = Modifier
                     .padding(horizontal = 12.dp)
-                    .weight(1f),
+                    .weight(1f)
+                    .testTag(Tags.TEXT),
                 color = MaterialTheme.colorScheme.onSurface,
             )
             NiaIconToggleButton(
@@ -416,14 +430,17 @@ private fun SingleTopicButton(
                     Icon(
                         imageVector = NiaIcons.Add,
                         contentDescription = name,
+                        modifier = Modifier.testTag(Tags.UNCHECKED_ICON)
                     )
                 },
                 checkedIcon = {
                     Icon(
                         imageVector = NiaIcons.Check,
                         contentDescription = name,
+                        modifier = Modifier.testTag(Tags.CHECKED_ICON)
                     )
                 },
+
             )
         }
     }
@@ -495,7 +512,7 @@ private fun feedItemsSize(
         OnboardingUiState.Loading,
         OnboardingUiState.LoadFailed,
         OnboardingUiState.NotShown,
-        -> 0
+            -> 0
 
         is OnboardingUiState.Shown -> 1
     }
