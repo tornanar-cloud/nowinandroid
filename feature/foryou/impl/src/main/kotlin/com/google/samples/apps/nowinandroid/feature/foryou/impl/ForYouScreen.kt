@@ -167,15 +167,18 @@ internal fun ForYouScreen(
         modifier = modifier
             .fillMaxSize(),
     ) {
+        val feedSize = if (feedState is NewsFeedUiState.Success) feedState.feed.size else 0
+        val gridModifier = Modifier
+            .testTag("forYou:feed").lazyListSize(feedSize)
         LazyVerticalStaggeredGrid(
             columns = StaggeredGridCells.Adaptive(300.dp),
             contentPadding = PaddingValues(16.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalItemSpacing = 24.dp,
-            modifier = Modifier
-                .testTag("forYou:feed"),
+            modifier = gridModifier,
             state = state,
         ) {
+
             onboarding(
                 onboardingUiState = onboardingUiState,
                 onTopicCheckedChanged = onTopicCheckedChanged,
@@ -195,6 +198,7 @@ internal fun ForYouScreen(
             )
 
             newsFeed(
+                //modifier = gridModifier,
                 feedState = feedState,
                 onNewsResourcesCheckedChanged = onNewsResourcesCheckedChanged,
                 onNewsResourceViewed = onNewsResourceViewed,
@@ -413,7 +417,7 @@ private fun SingleTopicButton(
             TopicIcon(
                 imageUrl = imageUrl,
 
-            )
+                )
             Text(
                 text = name,
                 style = MaterialTheme.typography.titleSmall,
@@ -430,18 +434,18 @@ private fun SingleTopicButton(
                     Icon(
                         imageVector = NiaIcons.Add,
                         contentDescription = name,
-                        modifier = Modifier.testTag(Tags.UNCHECKED_ICON)
+                        modifier = Modifier.testTag(Tags.UNCHECKED_ICON),
                     )
                 },
                 checkedIcon = {
                     Icon(
                         imageVector = NiaIcons.Check,
                         contentDescription = name,
-                        modifier = Modifier.testTag(Tags.CHECKED_ICON)
+                        modifier = Modifier.testTag(Tags.CHECKED_ICON),
                     )
                 },
 
-            )
+                )
         }
     }
 }
