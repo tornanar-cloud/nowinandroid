@@ -90,8 +90,9 @@ fun LazyStaggeredGridScope.newsFeed(
                     },
                     onTopicClick = onTopicClick,
                     modifier = Modifier
-                        .padding(horizontal = 8.dp).lazyListItemPosition(index)
-                        .animateItem(),
+                        .padding(horizontal = 8.dp)
+                        .animateItem().
+                        lazyListItemPosition(index),
                 )
             }
         }

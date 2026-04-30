@@ -168,14 +168,14 @@ internal fun ForYouScreen(
             .fillMaxSize(),
     ) {
         val feedSize = if (feedState is NewsFeedUiState.Success) feedState.feed.size else 0
-        val gridModifier = Modifier
-            .testTag("forYou:feed").lazyListSize(feedSize)
+        //val gridModifier = Modifier
+
         LazyVerticalStaggeredGrid(
             columns = StaggeredGridCells.Adaptive(300.dp),
             contentPadding = PaddingValues(16.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalItemSpacing = 24.dp,
-            modifier = gridModifier,
+            modifier = Modifier.testTag("forYou:feed").lazyListSize(feedSize),
             state = state,
         ) {
 
