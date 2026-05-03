@@ -18,34 +18,18 @@ package com.google.samples.apps.nowinandroid.ui.lesson18
 
 import androidx.compose.ui.semantics.SemanticsNode
 import androidx.compose.ui.test.SemanticsNodeInteractionsProvider
-import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar.Tags
 import io.github.kakaocup.compose.node.element.KNode
 import io.github.kakaocup.compose.node.element.lazylist.KLazyListItemNode
 
-class ForYouTopicSelectionListItem(
+class ForYouFeedItemList(
     semanticNode: SemanticsNode,
     semanticProvider: SemanticsNodeInteractionsProvider? = null,
-) : KLazyListItemNode<ForYouTopicSelectionListItem>(semanticNode, semanticProvider) {
-    val icon = child<KNode> {
-        hasTestTag(Tags.IMAGE)
-    }
+) : KLazyListItemNode<ForYouTopicSelectionListItem>(semanticNode, semanticProvider){
 
-    val itemText = child<KNode> {
-        hasTestTag(Tags.TEXT)
-    }
-
-    val checkedButtonIcon = child<KNode> {
-        hasTestTag(Tags.CHECKED_ICON)
-    }
-
-    val uncheckedButtonIcon = child<KNode> {
-        hasTestTag(Tags.UNCHECKED_ICON)
-    }
-
-
-    val toggleButton = child<KNode>{
-        hasTestTag("forYou:addToggleButton")
-    }
+val cardTitle = child<KNode>{
+    hasTestTag("forYou:cardTitle")
 }
-
-
+val cardDate = child<KNode> {
+    hasTestTag("forYou:cardDate")
+}
+}

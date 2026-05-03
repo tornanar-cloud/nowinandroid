@@ -27,7 +27,7 @@ import io.github.kakaocup.compose.node.element.lazylist.KLazyListItemBuilder
 import io.github.kakaocup.compose.node.element.lazylist.KLazyListNode
 
 object LazyListScreen: ComposeScreen<LazyListScreen>() {
-val items = createLazyList(
+val itemsTopic = createLazyList(
     viewBuilderAction = {
         hasTestTag("forYou:topicSelection")
     },
@@ -35,7 +35,19 @@ val items = createLazyList(
         itemType(::ForYouTopicSelectionListItem)
     })
 
+    val itemsFeed = createLazyList(
+        viewBuilderAction = {
+            hasTestTag("forYou:feed")
+        },
+        itemTypeBuilder = {
+            itemType(::ForYouFeedItemList)
+        })
 }
+
+
+
+
+
 
 
 fun BaseNode<*>.createLazyList(

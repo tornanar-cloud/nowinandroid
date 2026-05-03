@@ -208,7 +208,8 @@ fun NewsResourceHeaderImage(
         Image(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(180.dp),
+                .height(180.dp)
+                .testTag("forYou:cardImage"),
             contentScale = ContentScale.Crop,
             painter = if (isError.not() && !isLocalInspection) {
                 imageLoader
@@ -227,7 +228,7 @@ fun NewsResourceTitle(
     newsResourceTitle: String,
     modifier: Modifier = Modifier,
 ) {
-    Text(newsResourceTitle, style = MaterialTheme.typography.headlineSmall, modifier = modifier)
+    Text(newsResourceTitle, style = MaterialTheme.typography.headlineSmall, modifier = modifier.testTag("forYou:cardTitle"))
 }
 
 @Composable
@@ -239,7 +240,7 @@ fun BookmarkButton(
     NiaIconToggleButton(
         checked = isBookmarked,
         onCheckedChange = { onClick() },
-        modifier = modifier,
+        modifier = modifier.testTag("forYou:cardBookMarkButton"),
         icon = {
             Icon(
                 imageVector = NiaIcons.BookmarkBorder,
@@ -293,6 +294,7 @@ fun NewsResourceMetaData(
             formattedDate
         },
         style = MaterialTheme.typography.labelSmall,
+        modifier = Modifier.testTag("forYou:cardDate")
     )
 }
 

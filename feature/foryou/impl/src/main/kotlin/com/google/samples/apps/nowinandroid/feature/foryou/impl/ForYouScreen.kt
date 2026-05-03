@@ -444,6 +444,8 @@ private fun SingleTopicButton(
                         modifier = Modifier.testTag(Tags.CHECKED_ICON),
                     )
                 },
+                modifier = Modifier.testTag("forYou:addToggleButton")
+
 
                 )
         }
