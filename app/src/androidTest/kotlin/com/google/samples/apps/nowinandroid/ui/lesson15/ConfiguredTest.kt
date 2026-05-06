@@ -33,6 +33,6 @@ abstract class ConfiguredTest: TestCase(kaspressoBuilder = Kaspresso.Builder.wit
     val composeRule = createAndroidComposeRule<MainActivity>()
 
     @get:Rule(order = 2)
-    val kakaoRule = KakaoComposeTestRule(composeRule,true)
+    val kakaoRule = KakaoComposeTestRule(composeRule, useUnmergedTree = true)
 
 }
